@@ -7,9 +7,11 @@ import java.util.HashMap;
 interface AddProduct {
 	public void add(Product product, Integer quantity);
 }
+
 interface RemoveProduct {
 	public void remove(Product product, Integer quantity);
 }
+
 interface ClearProduct {
 	public void clear();
 }
