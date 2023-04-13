@@ -1,12 +1,24 @@
 package ru.netology;
 
+// Single-responsibility principle
+// Liskov substitution principle
 public class Product {
-	private String name;
-	private double price;
+	private int id; // Номер продукта
+	private String name; // Наименование продукта
+	private double price; // Цена продукта
 
-	public Product(String name, double price) {
+	public Product(int id, String name, double price) {
+		this.id = id;
 		this.name = name;
 		this.price = price;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -24,9 +36,9 @@ public class Product {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "{ " + name + ", " + price + " }";
+		return "{ " + id + ", " + name + ", " + price + " }";
 	}
 }

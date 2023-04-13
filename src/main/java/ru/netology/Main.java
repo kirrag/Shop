@@ -1,49 +1,42 @@
 package ru.netology;
 
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Map;
 
 public class Main {
-	
-	// Magic rule
-	private static Product moloko = new Product("Молоко", 100.0);
-	private static Product hleb = new Product("Хлеб", 50.0);
-	private static Product grechka = new Product("Гречневая крупа", 150.0);
 
 	private static Scanner scanner = new Scanner(System.in);
 
-	private static void printMenu(List<Product> products) {
-		for (Product product : products) {
-			System.out.println(product.toString());
-		}
-		System.out.println("Для завершения покупки введите \"end\"");
-	}
-
 	public static void main(String[] args) {
 
-		List<Product> products = new ArrayList<>();
-		products.add(moloko);
-		products.add(hleb);
-		products.add(grechka);
+		// Создаем справочник продуктов
+		ShopCatalog catalog = new ShopCatalog();
+		Map<Integer, Product> products = catalog.getProducts();
 
+		// Создем корзину
 		Basket basket = new Basket();
 
-		printMenu(products);
+		// Вывод пользовательского меню
+		ShopMenu menu = new ShopMenu();
+		menu.printMenu(products);
 
-
+		// Основной цикл программы
 		while (true) {
 			String input = scanner.nextLine().trim();
-			if ("end".equals(input)) break;
+			if ("end".equals(input))
+				break;
+			String[] parm = input.split("\\W+");
+			int id = Integer.parseInt(parm[0]);
+			int quantity = Integer.parseInt(parm[1]);
+
+			// Добавление продукта в корзину
+			if (products.get(id) != null && quantity > 0) {
+				basket.add(products.get(id), quantity);
+			} else {
+				System.out.println("Неправильно введен номер товара или количество!");
+			}
 		}
-
-		basket.add(moloko, 2);
-		basket.add(hleb, 1);
-		basket.add(grechka, 1);
-		basket.add(moloko, 3);
-		basket.remove(moloko, 1);
-
+		// Вывод заказа
 		basket.printOrder();
 	}
 }
